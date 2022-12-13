@@ -1727,12 +1727,31 @@
     "@solana/wallet-adapter-base" "^0.9.17"
     "js-base64" "^3.7.2"
 
+"@solana/buffer-layout-utils@^0.2.0":
+  "integrity" "sha512-szG4sxgJGktbuZYDg2FfNmkMi0DYQoVjN2h7ta1W1hPrwzarcFLBq9UpX1UjNXsNpT9dn+chgprtWGioUAr4/g=="
+  "resolved" "https://registry.npmjs.org/@solana/buffer-layout-utils/-/buffer-layout-utils-0.2.0.tgz"
+  "version" "0.2.0"
+  dependencies:
+    "@solana/buffer-layout" "^4.0.0"
+    "@solana/web3.js" "^1.32.0"
+    "bigint-buffer" "^1.1.5"
+    "bignumber.js" "^9.0.1"
+
 "@solana/buffer-layout@^4.0.0":
   "integrity" "sha512-lR0EMP2HC3+Mxwd4YcnZb0smnaDw7Bl2IQWZiTevRH5ZZBZn6VRWn3/92E3qdU4SSImJkA6IDHawOHAnx/qUvQ=="
   "resolved" "https://registry.npmjs.org/@solana/buffer-layout/-/buffer-layout-4.0.0.tgz"
   "version" "4.0.0"
   dependencies:
     "buffer" "~6.0.3"
+
+"@solana/spl-token@^0.3.6":
+  "integrity" "sha512-P9pTXjDIRvVbjr3J0mCnSamYqLnICeds7IoH1/Ro2R9OBuOHdp5pqKZoscfZ3UYrgnCWUc1bc9M2m/YPHjw+1g=="
+  "resolved" "https://registry.npmjs.org/@solana/spl-token/-/spl-token-0.3.6.tgz"
+  "version" "0.3.6"
+  dependencies:
+    "@solana/buffer-layout" "^4.0.0"
+    "@solana/buffer-layout-utils" "^0.2.0"
+    "buffer" "^6.0.3"
 
 "@solana/wallet-adapter-alpha@^0.1.6":
   "integrity" "sha512-vjuM1+vjw5dR91Jel1SMuKaaSF6UUnVbneNXn5M2bmJdSuwdnyN4svOngbPJF7SFTLaObUEVy4tyN26DHKn02A=="
@@ -2191,7 +2210,7 @@
     "@wallet-standard/app" "^1.0.0-rc.0"
     "@wallet-standard/base" "^1.0.0-rc.0"
 
-"@solana/web3.js@^1.30.2", "@solana/web3.js@^1.36.0", "@solana/web3.js@^1.44.3", "@solana/web3.js@^1.5.0", "@solana/web3.js@^1.50.1", "@solana/web3.js@^1.52.0", "@solana/web3.js@^1.58.0", "@solana/web3.js@^1.61.0":
+"@solana/web3.js@^1.30.2", "@solana/web3.js@^1.32.0", "@solana/web3.js@^1.36.0", "@solana/web3.js@^1.44.3", "@solana/web3.js@^1.47.4", "@solana/web3.js@^1.5.0", "@solana/web3.js@^1.50.1", "@solana/web3.js@^1.52.0", "@solana/web3.js@^1.58.0", "@solana/web3.js@^1.61.0":
   "integrity" "sha512-RyaHMR2jGmaesnYP045VLeBGfR/gAW3cvZHzMFGg7bkO+WOYOYp1nEllf0/la4U4qsYGKCsO9eEevR5fhHiVHg=="
   "resolved" "https://registry.npmjs.org/@solana/web3.js/-/web3.js-1.66.2.tgz"
   "version" "1.66.2"
