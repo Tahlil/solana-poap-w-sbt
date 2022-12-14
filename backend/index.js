@@ -29,7 +29,9 @@ import {
     const mint = mintKeypair.publicKey;
     const mintLen = getMintLen([ExtensionType.NonTransferable]);
     const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
-
+    console.log("Mint and mint authority:");
+    console.log(mint);
+    console.log(mintAuthority);
     const transaction = new Transaction().add(
         SystemProgram.createAccount({
             fromPubkey: payer.publicKey,
