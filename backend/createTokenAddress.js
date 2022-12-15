@@ -1,5 +1,5 @@
 import { Keypair, Transaction, SystemProgram, Connection, PublicKey } from "@solana/web3.js";
-
+import { SBTAddress } from "./config.js";
 import {
     ACCOUNT_SIZE,
     createAssociatedTokenAccountInstruction,
@@ -31,8 +31,8 @@ console.log(bs58);
 
     const ownerPublicKey = new PublicKey("cCx8fugvvUFMEpuryqSzrDs6PBDCpXkorH7kodGbM5r")
 
-    const mintPubkey = new PublicKey("FXi8GKNvfzsDRnog68S1h4XaUaimygCYb1x4idGNg4o1")
-    const TokenID = new PublicKey("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb")
+    const mintPubkey = new PublicKey(SBTAddress)
+
     let ata = await getAssociatedTokenAddress(
         mintPubkey, // mint
         ownerPublicKey, // owner

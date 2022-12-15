@@ -61,25 +61,6 @@ export const HomeView: FC = ({}) => {
     
     let signature: TransactionSignature = "";
     try {
-    //   const decimals = 9;
-    //   const mint = publicKey;
-    //   const mintLen = getMintLen([ExtensionType.NonTransferable]);
-    //   const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
-
-    //   const transaction = new Transaction().add(
-    //     SystemProgram.createAccount({
-    //         fromPubkey: publicKey,
-    //         newAccountPubkey: mint,
-    //         space: mintLen,
-    //         lamports,
-    //         programId: TOKEN_2022_PROGRAM_ID,
-    //     }),
-    //     createInitializeNonTransferableMintInstruction(mint, TOKEN_2022_PROGRAM_ID),
-    //     createInitializeMintInstruction(mint, decimals, publicKey, null, TOKEN_2022_PROGRAM_ID)
-    // );
-
-
-    //   signature =  await sendAndConfirmTransaction(connection, transaction, [wallet, wallet], undefined);
 
     //   await connection.confirmTransaction(signature, "confirmed");
     //   console.log(signature);

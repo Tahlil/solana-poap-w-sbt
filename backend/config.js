@@ -1,1 +1,1 @@
-export const SBTAddress  = "FoF7oz4rrQCwbDRACb4T7KfRk4y96g1D2sfN8wsYfAco";
+export const SBTAddress  = "67LTvYJ4fMLSCgpp3FobUiKQt8tvYBcr54nN46ENEVpk";

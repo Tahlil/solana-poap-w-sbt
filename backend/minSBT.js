@@ -1,10 +1,12 @@
 import {
     clusterApiUrl,
+    sendAndConfirmTransaction,
     Connection,
     PublicKey
 } from '@solana/web3.js';
-
-import { SBTAddress } from "./config.js";
+import {
+   mintTo
+} from '@solana/spl-token';
 
 (async () => {
     const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
@@ -13,11 +15,10 @@ import { SBTAddress } from "./config.js";
       );
 
     const mintAccount = new PublicKey(
-        SBTAddress
+        "FXi8GKNvfzsDRnog68S1h4XaUaimygCYb1x4idGNg4o1"
       );
     const account = await connection.getTokenAccountsByOwner(accountPublicKey, {
           mint: mintAccount});
     
     console.log(account.value[0].pubkey.toString());
 })();
-

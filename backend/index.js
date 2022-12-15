@@ -23,7 +23,7 @@ import {
     await connection.confirmTransaction({ signature: airdropSignature, ...(await connection.getLatestBlockhash()) });
 
     const mintAuthority = Keypair.generate();
-    const decimals = 9;
+    const decimals = 0;
 
     const mintKeypair = Keypair.generate();
     const mint = mintKeypair.publicKey;
