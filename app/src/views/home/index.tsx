@@ -89,6 +89,8 @@ export const HomeView: FC = ({}) => {
   }
 
   useEffect(() => {
+    console.log("Use effect triggered");
+    
     if (wallet.publicKey) {
       console.log(wallet.publicKey.toBase58());
       getUserSOLBalance(wallet.publicKey, connection);
@@ -102,7 +104,61 @@ export const HomeView: FC = ({}) => {
           await getCurrentBalance();
         });
     }
-  }, [wallet.publicKey, connection, getUserSOLBalance]);
+  }, [wallet.publicKey, connection, getUserSOLBalance, tokenAddress]);
+
+  const createTokenAddress = useCallback(async () => {
+    if (!publicKey) {
+      notify({ type: "error", message: `Wallet not connected!` });
+      console.log("error", `Send Transaction: Wallet not connected!`);
+      return;
+    }
+
+    try {
+      setLoaded(false);
+      console.log("Creating token address...");
+      console.log(publicKey);
+      
+      const res = await fetch("http://localhost:3000/api/createTokenAddress", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userPublicKey: publicKey }),
+      });
+      const data = await res.json();
+
+      await sleep(3000);
+      setTokenAddress(data.sig)
+      // setTokenBalance(tokenBalance+1);
+      console.log(data);
+      console.log("Token address created...");
+      
+      setLoaded(true);
+
+      notify({
+        type: "success",
+        message:
+          "Transaction successful!\n Check the tx: \n https://explorer.solana.com/tx/" +
+          data.sig +
+          "?cluster=devnet",
+        txid: data.sig,
+      });
+    } catch (error: any) {
+      notify({
+        type: "error",
+        message: `Transaction failed!`,
+        description: error?.message,
+        txid: "",
+      });
+      console.log(error);
+      
+      console.log("error", `Transaction failed! ${error?.message}`, "");
+
+      return;
+    }
+
+    
+  },  [publicKey, notify, connection, sendTransaction, wallet]); 
 
   const mintOnClick = useCallback(async () => {
     console.log("Clicked");
@@ -128,7 +184,7 @@ export const HomeView: FC = ({}) => {
       await sleep(3000);
       await getCurrentBalance()
       // setTokenBalance(tokenBalance+1);
-      // console.log(data);
+      console.log(data);
       
       setLoaded(true);
 
@@ -218,7 +274,22 @@ export const HomeView: FC = ({}) => {
             </div>
             <div className="flex flex-col">
               {tokenAddress == "" ? (
-                <span className="text-red">Token Address Not found</span>
+                <div className="m-6">
+                  
+                  Mint Address:{" "}
+                  <span className="underline subpixel-antialiased font-bold text-lime-700 text-lg">
+                    {mintAddress}
+                  </span>
+                  <br />
+                <div className="text-red">Token Address Not found</div>
+
+                <button
+                onClick={createTokenAddress}
+                className="m-3 bg-transparent hover:bg-teal-500 text-teal-300 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+              >
+                Create token address
+              </button>
+                </div>
               ) : (
                 <div>
                   Token Address:{" "}
@@ -235,15 +306,17 @@ export const HomeView: FC = ({}) => {
                   <span className="underline subpixel-antialiased font-bold text-teal-700 text-3xl">
                     {tokenBalance}
                   </span>
-                </div>
-              )}
-
-              <button
+                  <br />
+                  <button
                 onClick={mintOnClick}
                 className="m-3 bg-transparent hover:bg-teal-500 text-teal-300 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
               >
                 Mint SBT / Buy Ticket
               </button>
+                </div>
+              )}
+
+              
             </div>
           </div>
         </div>

@@ -38,7 +38,7 @@ export default async function handler(
         );
         let userTokenAddress = "";
         if(account.value.length > 0 ){
-          console.log("Token address found");
+          console.log("No need to create new token address");
             
           userTokenAddress = account.value[0].pubkey.toString()
           const mintAuthPrivateKey = process.env.NEXT_PUBLIC_MINT_AUTHORITY_PRIVATE_KEY
@@ -55,7 +55,7 @@ export default async function handler(
           
           const mintPubkey = new PublicKey(SBTAddress);
           
-          const associatedTokenAccount = new PublicKey(ATAAddress);
+          const associatedTokenAccount = new PublicKey(userTokenAddress);
           let sig = await mintTo(
             connection,
             feePayer,
