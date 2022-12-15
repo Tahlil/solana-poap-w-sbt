@@ -1,6 +1,7 @@
 // Next, React
 import { FC, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import axios from "axios";
 import {
   clusterApiUrl,
   sendAndConfirmTransaction,
@@ -33,6 +34,7 @@ import useUserSOLBalanceStore from "../../stores/useUserSOLBalanceStore";
 export const HomeView: FC = ({}) => {
   const [tokenAddress, setTokenAddress] = useState("")
   const [mintAddress, setMintAddress] = useState("")
+  const [tokenBalance, setTokenBalance] = useState(0)
   const wallet = useWallet();
   const { connection } = useConnection();
 
@@ -44,9 +46,45 @@ export const HomeView: FC = ({}) => {
   useEffect(() => {
     fetch('http://localhost:3000/api/getTokenAddress?userPublicKey='+publicKey)
       .then((res) => res.json())
-      .then((data) => {
+      .then(async (data) => {
         setTokenAddress(data.tokenAddress)
         setMintAddress(data.mintAddress)
+        const response = await axios({
+          url: `https://api.devnet.solana.com`,
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          data: [
+              {
+                jsonrpc: "2.0",
+                id: 1,
+                method: "getTokenAccountsByOwner",
+                params: [
+                  publicKey,
+                  {
+                    mint: mintAddress,
+                  },
+                  {
+                    encoding: "jsonParsed",
+                  },
+                ],
+              },
+              
+          ]
+      });
+     
+      console.log(response.data[0].result.value[0].account.data.parsed.info.tokenAmount);
+      let tokens = response.data[0].result.value;
+      console.log(tokens[0]);
+      
+      for (const token of tokens) {
+       if(token.pubkey === tokenAddress){
+        console.log("Token address found");
+        setTokenBalance(token.account.data.parsed.info.tokenAmount.amount)
+       }
+       
+      }
+      
+
       })
     if (wallet.publicKey) {
       console.log(wallet.publicKey.toBase58());
@@ -115,6 +153,8 @@ export const HomeView: FC = ({}) => {
               Token Address:  <span className="underline subpixel-antialiased font-bold text-lime-700" >{tokenAddress}</span>
               <br />
               Mint Address:  <span className="underline subpixel-antialiased font-bold text-amber-700" >{mintAddress}</span>
+              <br />
+              Current balance:  <span className="underline subpixel-antialiased font-bold text-teal-700" >{tokenBalance}</span>
             </div>
           )}
         </div>
