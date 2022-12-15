@@ -147,7 +147,7 @@ export const HomeView: FC = ({}) => {
         <div>
 
 
-        <div className="mx-auto bg-gray-700 h-screen flex items-center justify-center px-8">
+        <div className="mx-auto bg-gray-700 h-screen flex flex-wrap  items-center justify-center">
   <div className="flex flex-col w-full bg-white rounded shadow-lg sm:w-3/4 md:w-1/2 lg:w-3/5">
     <div className="w-full h-64 bg-top bg-cover rounded-t bg-[url('https://dailyhodl.com/wp-content/uploads/2021/11/solana-users-browser.jpg')]"></div>
     <div className="flex flex-col w-full md:flex-row">
@@ -170,12 +170,8 @@ export const HomeView: FC = ({}) => {
         </div>
     </div>
 </div>
-</div>
-
-
-
-          
-        {tokenAddress==""  ? (
+<div className="flex flex-col" >
+{tokenAddress==""  ? (
              <span className="text-red">Token Address Not found</span>
           ) : (
             <div>
@@ -183,14 +179,22 @@ export const HomeView: FC = ({}) => {
               <br />
               Mint Address:  <span className="underline subpixel-antialiased font-bold text-amber-700" >{mintAddress}</span>
               <br />
-              Current balance:  <span className="underline subpixel-antialiased font-bold text-teal-700" >{tokenBalance}</span>
+              Number Of Tickets:  <span className="underline subpixel-antialiased font-bold text-teal-700" >{tokenBalance}</span>
             </div>
           )}
-        </div>
+      
        
-        <button onClick={mintOnClick} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-          Mint SBT
+        <button onClick={mintOnClick} className="m-3 bg-transparent hover:bg-teal-500 text-teal-300 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+          Mint SBT / Buy Ticket
         </button>
+</div>
+</div>
+
+
+
+          
+        
+        </div>
       </div>
     </div>
   );
