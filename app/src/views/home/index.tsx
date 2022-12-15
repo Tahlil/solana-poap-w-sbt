@@ -117,6 +117,7 @@ export const HomeView: FC = ({}) => {
         txid: signature,
       });
       console.log("error", `Transaction failed! ${error?.message}`, signature);
+
       return;
     }
   }, [publicKey, notify, connection, sendTransaction, wallet]);
