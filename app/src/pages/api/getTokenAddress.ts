@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
+import { SBTAddress } from "../../../../backend/config.js"
 type Data = {
   tokenAddress: string;
 };
@@ -20,7 +21,7 @@ export default async function handler(
       );
 
       const mintAccount = new PublicKey(
-        "FXi8GKNvfzsDRnog68S1h4XaUaimygCYb1x4idGNg4o1"
+        SBTAddress
       );
       const account = await connection.getTokenAccountsByOwner(
         accountPublicKey,

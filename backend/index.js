@@ -14,6 +14,7 @@ import {
     ExtensionType,
     TOKEN_2022_PROGRAM_ID,
 } from '@solana/spl-token';
+import bs58 from "bs58";
 
 (async () => {
     const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
@@ -29,9 +30,9 @@ import {
     const mint = mintKeypair.publicKey;
     const mintLen = getMintLen([ExtensionType.NonTransferable]);
     const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
-    console.log("Mint and mint authority:");
-    console.log(mint);
-    console.log(mintAuthority);
+    console.log("Mint authority secret key:");
+    console.log(bs58.encode(mintKeypair.secretKey));
+    
     const transaction = new Transaction().add(
         SystemProgram.createAccount({
             fromPubkey: payer.publicKey,
