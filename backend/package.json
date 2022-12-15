@@ -12,6 +12,7 @@
   "dependencies": {
     "@solana/spl-token": "^0.3.6",
     "@solana/web3.js": "^1.70.1",
+    "axios": "^1.2.1",
     "bs58": "^5.0.0"
   }
 }
