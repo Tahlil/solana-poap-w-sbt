@@ -13,10 +13,6 @@ import {
 
 import bs58 from "bs58";
 
-// connection
-
-console.log(bs58);
-// 5YNmS1R9nNSCDzb5a7mMJ1dwK9uHeAAF4CmPEwKgVWr8
 
 
 (async () => {

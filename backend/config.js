@@ -1,1 +1,2 @@
-export const SBTAddress  = "BR8KAAqSgNv2hfah3fvWoR1joyjeqqPtSgtUFX6rZ2DD";
+export const SBTAddress  = "AwvP3nMUFU2fbp3ciUB6omxFEPACjuJvdCzfikKxtT8J";
+export const ATAAddress  = "AwvP3nMUFU2fbp3ciUB6omxFEPACjuJvdCzfikKxtT8J";

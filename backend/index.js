@@ -31,7 +31,8 @@ import bs58 from "bs58";
     const mintLen = getMintLen([ExtensionType.NonTransferable]);
     const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
     console.log("Mint authority secret key:");
-    console.log(bs58.encode(mintKeypair.secretKey));
+    console.log(bs58.encode(mintAuthority.secretKey));
+
     
     const transaction = new Transaction().add(
         SystemProgram.createAccount({
