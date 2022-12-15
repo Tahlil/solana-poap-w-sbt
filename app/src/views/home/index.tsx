@@ -1,6 +1,7 @@
 // Next, React
 import { FC, useEffect, useState, useCallback } from "react";
 import Link from "next/link";
+import Loader from "../../components/Loader";
 import axios from "axios";
 import {
   clusterApiUrl,
@@ -35,6 +36,7 @@ export const HomeView: FC = ({}) => {
   const [tokenAddress, setTokenAddress] = useState("");
   const [mintAddress, setMintAddress] = useState("");
   const [tokenBalance, setTokenBalance] = useState(0);
+  const [loaded, setLoaded] = useState(true);
   const wallet = useWallet();
   const { connection } = useConnection();
 
@@ -42,6 +44,10 @@ export const HomeView: FC = ({}) => {
   const { getUserSOLBalance } = useUserSOLBalanceStore();
 
   const { publicKey, sendTransaction } = wallet;
+
+  const sleep = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
 
   async function getCurrentBalance() {
     const response = await axios({
@@ -72,8 +78,12 @@ export const HomeView: FC = ({}) => {
 
     for (const token of tokens) {
       if (token.pubkey === tokenAddress) {
-        console.log("Token address found");
+        console.log("Token address found...");
+        console.log(token.account.data.parsed.info.tokenAmount.amount);
+        
         setTokenBalance(token.account.data.parsed.info.tokenAmount.amount);
+        console.log(tokenBalance);
+        
       }
     }
   }
@@ -105,8 +115,7 @@ export const HomeView: FC = ({}) => {
 
     let signature: TransactionSignature = "";
     try {
-      console.log("Minting token...");
-
+      setLoaded(false);
       const res = await fetch("http://localhost:3000/api/mintToken", {
         method: "POST",
         headers: {
@@ -116,9 +125,13 @@ export const HomeView: FC = ({}) => {
       });
       const data = await res.json();
 
-      console.log("Mint call Completed:");
+      await sleep(3000);
+      await getCurrentBalance()
+      // setTokenBalance(tokenBalance+1);
+      // console.log(data);
+      
+      setLoaded(true);
 
-      console.log(data);
 
       //   await connection.confirmTransaction(signature, "confirmed");
       // console.log(signature);
@@ -144,17 +157,21 @@ export const HomeView: FC = ({}) => {
   }, [publicKey, notify, connection, sendTransaction, wallet]);
 
   return (
+
+
     <div className="md:hero mx-auto p-4">
-      <div className="md:hero-content flex flex-col">
+      {!loaded ? (
+         <Loader />
+      ) : (
+        <div className="md:hero-content flex flex-col">
         <h1 className="text-center text-5xl md:pl-12 font-bold text-transparent bg-clip-text bg-gradient-to-tr from-[#9945FF] to-[#14F195]">
-          Scaffold Lite{" "}
+          P. O. A. P.{" "}
           <span className="text-sm font-normal align-top text-slate-700">
             v{pkg.version}
           </span>
         </h1>
         <h4 className="md:w-full text-center text-slate-300 my-2">
-          <p>Simply the fastest way to get started.</p>
-          Next.js, tailwind, wallet, web3.js, and more.
+          App
         </h4>
         <div className="max-w-md mx-auto mockup-code bg-primary p-6 my-2">
           <pre data-prefix=">">
@@ -205,17 +222,17 @@ export const HomeView: FC = ({}) => {
               ) : (
                 <div>
                   Token Address:{" "}
-                  <span className="underline subpixel-antialiased font-bold text-lime-700">
+                  <span className="underline subpixel-antialiased font-bold text-lime-700 text-lg">
                     {tokenAddress}
                   </span>
                   <br />
                   Mint Address:{" "}
-                  <span className="underline subpixel-antialiased font-bold text-amber-700">
+                  <span className="underline subpixel-antialiased font-bold text-amber-700 text-lg">
                     {mintAddress}
                   </span>
                   <br />
                   Number Of Tickets:{" "}
-                  <span className="underline subpixel-antialiased font-bold text-teal-700">
+                  <span className="underline subpixel-antialiased font-bold text-teal-700 text-3xl">
                     {tokenBalance}
                   </span>
                 </div>
@@ -231,6 +248,8 @@ export const HomeView: FC = ({}) => {
           </div>
         </div>
       </div>
+      )}
+      
     </div>
   );
 };
