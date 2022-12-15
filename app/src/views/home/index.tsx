@@ -32,6 +32,7 @@ import useUserSOLBalanceStore from "../../stores/useUserSOLBalanceStore";
 
 export const HomeView: FC = ({}) => {
   const [tokenAddress, setTokenAddress] = useState("")
+  const [mintAddress, setMintAddress] = useState("")
   const wallet = useWallet();
   const { connection } = useConnection();
 
@@ -45,6 +46,7 @@ export const HomeView: FC = ({}) => {
       .then((res) => res.json())
       .then((data) => {
         setTokenAddress(data.tokenAddress)
+        setMintAddress(data.mintAddress)
       })
     if (wallet.publicKey) {
       console.log(wallet.publicKey.toBase58());
@@ -105,11 +107,15 @@ export const HomeView: FC = ({}) => {
           {wallet && <p>SOL Balance: {(balance || 0).toLocaleString()}</p>}
         </div>
         <div>
-          <span>Token Address: </span>
+          
         {tokenAddress==""  ? (
-            <span className="text-red">Not found</span>
+             <span className="text-red">Token Address Not found</span>
           ) : (
-            <span className="underline subpixel-antialiased font-bold text-lime-700" >{tokenAddress}</span>
+            <div>
+              Token Address:  <span className="underline subpixel-antialiased font-bold text-lime-700" >{tokenAddress}</span>
+              <br />
+              Mint Address:  <span className="underline subpixel-antialiased font-bold text-amber-700" >{mintAddress}</span>
+            </div>
           )}
         </div>
        

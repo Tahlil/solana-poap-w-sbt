@@ -3,6 +3,7 @@ import { clusterApiUrl, Connection, PublicKey } from "@solana/web3.js";
 import { SBTAddress } from "../../../../backend/config.js"
 type Data = {
   tokenAddress: string;
+  mintAddress: string;
 };
 
 export default async function handler(
@@ -33,7 +34,7 @@ export default async function handler(
       if(account.value.length > 0 ){
         userTokenAddress = account.value[0].pubkey.toString()
       }
-      res.status(200).json({ tokenAddress: userTokenAddress });
+      res.status(200).json({ tokenAddress: userTokenAddress, mintAddress: SBTAddress });
     }
   } else {
     res.status(400);
